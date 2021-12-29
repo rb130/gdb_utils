@@ -10,10 +10,10 @@ import re
 debug = False
 
 
-def delay_signal(pid: int, signal: Union[int, str], timeout: int):
+def delay_signal(pid: int, signal: Union[int, str], timeout: float):
     return subprocess.Popen([
         "/bin/sh", "-c",
-        "sleep %d && kill -%s %d"
+        "sleep %f && kill -%s %d"
         % (timeout, signal, pid)
     ])
 
@@ -26,7 +26,7 @@ def gdb_execute(cmd: str, show: Optional[bool] = None):
     return gdb.execute(cmd, from_tty=False, to_string=not show)
 
 
-def gdb_execute_timeout(cmd: str, timeout: Optional[int] = None, show: Optional[bool] = None):
+def gdb_execute_timeout(cmd: str, timeout: Optional[float] = None, show: Optional[bool] = None):
     if show is None:
         show = debug
     if timeout is None:
